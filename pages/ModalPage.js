@@ -1,13 +1,12 @@
-class ModalPage {
-  constructor(page) {
-    this.page = page;
-  }
+const { BasePage } = require('./BasePage');
+
+class ModalPage extends BasePage {
 
   contactTitle() {
     return this.page.locator('#exampleModalLabel');
   }
 
-  signupTitle() {
+  signUpTitle() {
     return this.page.locator('#signInModalLabel');
   }
 
@@ -15,7 +14,11 @@ class ModalPage {
     return this.page.locator('#logInModalLabel');
   }
 
-  orderTitle() {
+  aboutTitle() {
+    return this.page.locator('#videoModalLabel');
+  }
+
+  placeOrderTitle() {
     return this.page.locator('#orderModalLabel');
   }
 }

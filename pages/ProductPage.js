@@ -1,6 +1,7 @@
 const { BasePage } = require('./BasePage');
 
 class ProductPage extends BasePage {
+
   name() {
     return this.page.locator('.name');
   }
@@ -14,14 +15,18 @@ class ProductPage extends BasePage {
   }
 
   async addToCart() {
-  await this.page.waitForResponse(resp =>
-    resp.url().includes('addtocart') && resp.status() === 200
-  );
 
-  await this.clickAndAcceptDialog(() =>
-    this.addToCartButton().click()
-  );
-}
+    await this.highlight(this.addToCartBtn());
+
+    const dialogPromise = this.page.waitForEvent('dialog');
+
+    await this.addToCartBtn().click();
+
+    const dialog = await dialogPromise;
+    await dialog.accept();
+
+    await this.page.waitForTimeout(2000);
+  }
 }
 
 module.exports = { ProductPage };

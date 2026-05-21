@@ -1,36 +1,64 @@
 const { BasePage } = require('./BasePage');
 
 class HomePage extends BasePage {
+
   async open() {
     await super.open('/');
   }
 
-  category(name) {
-    return this.page.locator('.list-group-item', { hasText: name });
+  categoryLink(name) {
+    return this.page.locator('.list-group-item', {
+      hasText: name
+    }).first();
+  }
+
+  productCard(title) {
+    return this.page.locator('.card-title', {
+      hasText: title
+    }).first();
   }
 
   async openCategory(name) {
-    await this.click(this.category(name));
-  }
 
-  async openCart() {
-    await this.click(this.page.locator('#cartur'));
+    await this.click(this.categoryLink(name));
+
+    await this.page.waitForTimeout(2000);
   }
 
   async openContactModal() {
-    await this.click(this.page.getByRole('link', { name: 'Contact' }));
-  }
 
-  async openLoginModal() {
-    await this.click(this.page.getByRole('link', { name: 'Log in' }));
+    await this.click(
+      this.page.getByRole('link', {
+        name: 'Contact'
+      })
+    );
   }
 
   async openSignUpModal() {
-    await this.click(this.page.getByRole('link', { name: 'Sign up' }));
+
+    await this.click(
+      this.page.getByRole('link', {
+        name: 'Sign up'
+      })
+    );
+  }
+
+  async openLoginModal() {
+
+    await this.click(
+      this.page.getByRole('link', {
+        name: 'Log in'
+      })
+    );
   }
 
   async openAboutModal() {
-    await this.click(this.page.getByRole('link', { name: 'About us' }));
+
+    await this.click(
+      this.page.getByRole('link', {
+        name: 'About us'
+      })
+    );
   }
 }
 

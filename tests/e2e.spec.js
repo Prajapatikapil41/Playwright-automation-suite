@@ -48,8 +48,7 @@ test.describe('Demoblaze E2E Suite', () => {
   test('5. Remove product from cart @cart', async ({ page }) => {
     const cart = new CartPage(page);
     await cart.open();
-    if (await cart.rows().count() > 0)
-      await cart.deleteFirstItem();
+    await cart.clearCart();
     await expect(cart.rows()).toHaveCount(0);
   });
 

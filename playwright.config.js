@@ -1,33 +1,51 @@
 const { defineConfig, devices } = require('@playwright/test');
 
-const baseURL = process.env.BASE_URL || 'https://www.demoblaze.com';
-
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 60 * 1000,
-  expect: { timeout: 10 * 1000 },
-
-  fullyParallel: true,
-  retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 1 : undefined,
-
+  expect: {
+    timeout: 10000
+  },
+  fullyParallel: false,
+  retries: 1,
+  workers: 1,
   reporter: [
-    ['html', { open: 'never', outputFolder: 'reports/html' }],
-    ['list'],
-    ['junit', { outputFile: 'reports/results.xml' }]
+    ['html', {
+      outputFolder: 'reports/html',
+      open: 'never'
+    }],
+    ['list']
   ],
 
   use: {
-    baseURL,
+    baseURL: 'https://www.demoblaze.com',
+    headless: true,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 15 * 1000
+    actionTimeout: 15000
   },
 
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } }
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome']
+      }
+    },
+
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox']
+      }
+    },
+
+    {
+      name: 'webkit',
+      use: {
+        ...devices['Desktop Safari']
+      }
+    }
   ]
 });
